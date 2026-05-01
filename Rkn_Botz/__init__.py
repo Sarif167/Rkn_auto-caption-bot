@@ -12,26 +12,26 @@
 
 # ⚠️ Please do not remove this credit!
 
-__name__ = "Rkn-AutoCaptionBot"
+__name__ = "Spy-AutoCaptionBot"
 __version__ = "1.0.0"
 __license__ = "MIT License"
-__copyright__ = "Copyright (C) 2024-present Rkn Developer <https://github.com/RknDeveloper>"
-__programmer__ = "<a href=https://github.com/RknDeveloper/Rkn-AutoCaptionBot>AutoCaptionBot</a>"
+__copyright__ = "Copyright (C) 2024-present SPY Developer <https://t.me/Prime_Movie_YT_Group>"
+__programmer__ = "<a href=https://t.me/Prime_Movie_YT_Group>SPYAutoCaptionBot</a>"
 __library__ = "<a href=https://github.com/pyrogram>Pyʀᴏɢʀᴀᴍ</a>"
 __language__ = "<a href=https://www.python.org/>Pyᴛʜᴏɴ</a>"
 __database__ = "<a href=https://cloud.mongodb.com/>Mᴏɴɢᴏ DB</a>"
-__developer__ = "<a href=https://t.me/Digital_Botz>Digital Botz</a>"
-__maindeveloper__ = "<a href=https://t.me/Rkn_Bots_Updates>Rkn Developer</a>"
+__developer__ = "<a href=https://t.me/Prime_Movie_Request_bot>Digital Botz</a>"
+__maindeveloper__ = "<a href=https://t.me/Prime_Movie_Request_bot>SPY Developer</a>"
 
 # main copyright herders (©️)
 # I have been working on this repo since 2024
 
 """
-📁 Rkn-AutoCaptionBot-main/
+📁 Spy-AutoCaptionBot-main/
 ├── 🐍 Python Files/
 │   ├── 📄 bot.py
 │   ├── 📄 config.py
-│   └── 📁 Rkn_Botz/
+│   └── 📁 Spy_Botz/
 │       ├── 📄 __init__.py
 │       ├── 📄 caption.py
 │       ├── 📄 database.py
