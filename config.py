@@ -18,8 +18,8 @@ import time
 
 class Rkn_Botz(object):
     # Rkn client config (required)
-    API_ID = os.environ.get("API_ID", "")
-    API_HASH = os.environ.get("API_HASH", "")
+    API_ID = os.environ.get("API_ID", "23621595")
+    API_HASH = os.environ.get("API_HASH", "de904be2b4cd4efe2ea728ded17ca77d")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
 
     # Start pic (default image link)
@@ -36,7 +36,7 @@ class Rkn_Botz(object):
 
     # Database config (required)
     DB_NAME = os.environ.get("DB_NAME", "AutoCaption_V05_Bot")
-    DB_URL = os.environ.get("DB_URL", "")
+    DB_URL = os.environ.get("DB_URL", "mongodb+srv://wajsarif461_db_user:TwacJh76mwpHHpjw@cluster0.biueyst.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
     # Default caption (with safe fallback)
     DEFAULT_CAPTION = os.environ.get(
@@ -51,7 +51,7 @@ class Rkn_Botz(object):
     )
 
     # Admin ID (single integer)
-    ADMIN = int(os.environ.get('ADMIN', '5960922591'))  # Yahan default ko apne Telegram User ID se replace karo
+    ADMIN = int(os.environ.get('ADMIN', '1249672673'))  # Yahan default ko apne Telegram User ID se replace karo
 
 # ————
 # End of file
