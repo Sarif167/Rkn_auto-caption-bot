@@ -23,7 +23,7 @@ class Rkn_Botz(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
 
     # Start pic (default image link)
-    RKN_PIC = os.environ.get("RKN_PIC", "https://telegra.ph/file/21a8e96b45cd6ac4d3da6.jpg")
+    RKN_PIC = os.environ.get("RKN_PIC", "https://image.zaw-myo.workers.dev/image/c6a08278-321f-4f4f-84f2-2aa14ba31000")
 
     # Bot uptime (start time)
     BOT_UPTIME = time.time()
@@ -32,7 +32,7 @@ class Rkn_Botz(object):
     PORT = int(os.environ.get("PORT", "8080"))
 
     # Force subscribe channel username (without @) (only public chats username required)
-    FORCE_SUB = os.environ.get("FORCE_SUB", "Rkn_Botz")
+    FORCE_SUB = os.environ.get("FORCE_SUB", "Prime_Movie_YT_Group")
 
     # Database config (required)
     DB_NAME = os.environ.get("DB_NAME", "AutoCaption_V05_Bot")
@@ -41,7 +41,7 @@ class Rkn_Botz(object):
     # Default caption (with safe fallback)
     DEFAULT_CAPTION = os.environ.get(
         "DEFAULT_CAPTION",
-        "<b><a href='https://t.me/Rkn_Botz'>{file_name} Main Telegram Channel: @Rkn_Bots_Updates</a></b>"
+        "<b><a href='https://t.me/Prime_Movie_YT_Group'>{file_name} Main Telegram Channel: @Prime_Movie_YT_Group</a></b>"
     )
 
     # Sticker ID default
