@@ -76,9 +76,8 @@ async def broadcast(client, message):
                 f"• ⚠️ ᴜɴsᴜᴄᴄᴇssғᴜʟ: <code>{failed}</code>"
             )
         except Exception:
-            pass  # ignore edit failures during loop
+            pass
 
-    # Final status
     await rkn_status_msg.edit(
         f"<u><b>✅ ʙʀᴏᴀᴅᴄᴀsᴛ ᴄᴏᴍᴘʟᴇᴛᴇᴅ</b></u>\n\n"
         f"• 👥 ᴛᴏᴛᴀʟ ᴜsᴇʀs: <code>{total_users}</code>\n"
@@ -89,7 +88,6 @@ async def broadcast(client, message):
     )
 
         
-# Restart to cancell all process 
 @Client.on_message(filters.private & filters.user(Rkn_Botz.ADMIN) & filters.command("restart"))
 async def restart_bot(client, message):
     reply = await message.reply("🔄 Restarting bot...")
@@ -118,7 +116,6 @@ async def start_cmd(client, message):
         ])
     )
 
-# this command works on channels only 
 @Client.on_message(filters.command("set_caption") & filters.channel)
 async def set_caption(client, message):
     if len(message.command) < 2:
@@ -128,6 +125,7 @@ async def set_caption(client, message):
     channel_id = message.chat.id
 
     existing = await rkn_botz._channels_collection.find_one({"channelId": channel_id})
+
     if existing:
         await rkn_botz.update_channel_caption(channel_id, caption)
     else:
@@ -135,33 +133,28 @@ async def set_caption(client, message):
 
     await message.reply(f"✅ Caption set:\n\n<code>{caption}</code>")
 
-
-# this command works on channels only 
 @Client.on_message(filters.command(["delcaption", "del_caption", "delete_caption"]) & filters.channel)
 async def delete_caption(client, message):
     channel_id = message.chat.id
     result = await rkn_botz._channels_collection.delete_one({"channelId": channel_id})
+
     if result.deleted_count:
         await message.reply("🗑️ Caption deleted. Using default now.")
     else:
         await message.reply("ℹ️ No caption found.")
 
-
 def detect_year(file_name):
-    # Step 1: Clean filename (replace symbols with space)
     clean_name = re.sub(r"[^\d]", " ", file_name)
-
-    # Step 2: Extract all 4-digit sequences
     candidates = re.findall(r"\b\d{4}\b", clean_name)
 
-    # Step 3: Return the first one that matches year range
     for year in candidates:
         year_int = int(year)
+
         if 1900 <= year_int <= 2099:
-            return year # results years
+            return year
             
-    return "Unknown" # not available 
-    
+    return "Unknown"
+
 def detect_season(file_name):
     match = re.search(r'\bS(\d{2})\b', file_name, re.IGNORECASE)
     return int(match.group(1)) if match else "Unknown"
@@ -175,46 +168,64 @@ def detect_quality(file_name):
     return match.group(1) if match else "Unknown"
     
 def detect_language(file_name):
-    languages = ['hindi', 'english', 'telugu', 'tamil', 'malayalam', 'kannada', 'bengali', 'marathi', 'urdu']
+    languages = [
+        'hindi',
+        'english',
+        'telugu',
+        'tamil',
+        'malayalam',
+        'kannada',
+        'bengali',
+        'marathi',
+        'urdu'
+    ]
+
     for lang in languages:
         if re.search(rf'\b{lang}\b', file_name, re.IGNORECASE):
             return lang.capitalize()
             
     return "Unknown"
-    
 
 def convert_size(size):    
     if not size:
         return ""
+
     power = 2**10
     n = 0
     Dic_powerN = {0: ' ', 1: 'K', 2: 'M', 3: 'G', 4: 'T'}
+
     while size > power:
         size /= power
         n += 1
+
     return str(round(size, 2)) + " " + Dic_powerN[n] + 'ʙ'
     
 @Client.on_message(filters.channel)
 async def auto_caption(client, message):
+
     if not message.media:
         return
 
     for mtype in ("video", "audio", "document", "voice"):
         media = getattr(message, mtype, None)
+
         if media and hasattr(media, "file_name"):
             file_name = re.sub(r"@\w+", "", media.file_name or "").replace("_", " ").replace(".", " ").strip()
-            file_size = getattr(media, "file_size", None)  # ✅ file_size added here
+            file_size = getattr(media, "file_size", None)
             break
     else:
         return
 
     channel_id = message.chat.id
     cap_data = await rkn_botz._channels_collection.find_one({"channelId": channel_id})
+
     original_caption = message.caption or file_name
 
     try:
+
         if cap_data:
             custom_caption = cap_data.get("caption", "")
+
             formatted = custom_caption.format(
                 file_name=file_name,
                 caption=original_caption,
@@ -222,10 +233,12 @@ async def auto_caption(client, message):
                 episode=detect_episode(original_caption),
                 season=detect_season(original_caption),
                 year=detect_year(original_caption),
-                quelty=detect_quality(original_caption)
-                file_size=convert_size(file_size) if file_size else "Unknown"  # ✅ Fixed
+                quelty=detect_quality(original_caption),
+                file_size=convert_size(file_size) if file_size else "Unknown"
             )
+
         else:
+
             formatted = Rkn_Botz.DEFAULT_CAPTION.format(
                 file_name=file_name,
                 caption=original_caption,
@@ -233,21 +246,16 @@ async def auto_caption(client, message):
                 episode=detect_episode(original_caption),
                 season=detect_season(original_caption),
                 year=detect_year(original_caption),
-                file_size=convert_size(file_size) if file_size else "Unknown"  # ✅ Fixed
+                quelty=detect_quality(original_caption),
+                file_size=convert_size(file_size) if file_size else "Unknown"
             )
+
         await message.edit_caption(formatted)
+
     except errors.FloodWait as e:
         await asyncio.sleep(e.value)
-        
+
 # ————
 # End of file
 # Original author: @RknDeveloperr
 # GitHub: https://github.com/RknDeveloper
-
-# Developer Contacts:
-# Telegram: @RknDeveloperr
-# Updates Channel: @Rkn_Bots_Updates & @Rkn_Botz
-# Special Thanks To: @ReshamOwner
-# Update Channels: @Digital_Botz & @DigitalBotz_Support
-
-# ⚠️ Please do not remove this credit!
